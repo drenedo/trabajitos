@@ -1,0 +1,75 @@
+{% include 'uheader.html' %}
+<script type="text/template" id="searchs_template">
+    <% _.each(searchs, function(search) { %>
+        <div class=search>
+            <div class=prov><%= search.fields.provinces %></div>
+            <div class=close onclick='javascript:adelete(<%= search.pk %>)'>X</div>
+            <div class=words><%= search.fields.words %></div>
+        </div>
+    <% }); %>
+</script>
+<script type="text/template" id="finds_template">
+    <% _.each(finds, function(find) { %>
+        <div id=find<%= find.id %>
+                <% if (typeof(date) != "undefined") { %>
+    <span class="date"><%= date %></span>
+<% } %>
+                onclick=getTries(<%= find.id %>) class=find
+            >
+            <div class=meta>
+                <div class=words1><%= find.words %></div>
+                <div class=provinces><%= find.provinces %></div>
+            </div>
+            <div class=date><%= find.date %></div>
+            <div class=results>
+                <div class=total>Total:<%= find.total %></div>
+                <div class=efective>Efective:<%= find.efective %></div>
+            </div>
+        </div>
+        <div id=to<%= find.id %> class=hidden ></div>
+    <% }); %>
+</script>
+<script type="text/template" id="jobs_template">
+    <% _.each(jobs, function(job) { %>
+        <div id=job<%= job.pk %> class=job>
+            <a href="<%= job.fields.url %>" ><%= job.fields.url %></a>
+        </div>
+    <% }); %>
+</script>
+
+<div id=home>
+    <div id=find>Find</div>
+    <div id=afind>
+        <form id=addfind action="/addfind/" method="post">
+        {% csrf_token %}
+            <fieldset class=mark>
+		<legend>Add Find</legend>
+                <ol>
+			<li>
+				<label for=name>Words</label>
+				<input id=words name=words type=text placeholder="Words" required autofocus>
+			</li>
+			<li>
+				<label for=name>Provinces</label>
+				<input id=provinces name=provinces type=text placeholder="Provinces" required autofocus>
+			</li>
+			<li>
+				<label for=name>Non filter</label>
+				<input id=non name=non type=text placeholder="Non filter" autofocus>
+			</li>
+			<li>
+				<label for=name>Locations</label>
+				<input id=non name=locations type=text placeholder="Locations" autofocus>
+			</li>
+                        <li id=ssaddfind>
+				<input id=add name=add type=submit value=add>
+			</li>
+                </ol>
+                <div id=searchs></div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div id=data>
+</div>
+{% include 'footer.html' %}

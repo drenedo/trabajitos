@@ -1,0 +1,206 @@
+body{    
+    background-color: #FFFFFF;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0;
+}
+h1{
+    color: #365DA0;
+    font-size: 34px;
+    padding: 12PX;
+    margin: 0px;
+}
+.header{
+    background-color: #81DAF5;
+}
+.mark{
+    border-width:6px;
+}
+#navigation{
+    background: #848484;
+    text-align: right;
+    padding: 0 2% 0 2%;
+}
+#navigation a{
+    font-size: 14px;
+    font-weight: bold;
+    padding: 1% 1% 0 1%;
+    color: white;
+    background: #848484;
+    text-decoration:none;
+}
+#navigation a:hover{
+    font-size: 14px;
+    font-weight: bold;
+    padding: 1% 1% 0 1%;
+    background: white;
+    color: #365DA0;
+    text-decoration:none;
+}
+#sslogin{
+    padding-top: 5%;
+}
+
+#slogin{
+    float:right;
+}
+
+#errors li{
+    color: red;
+    list-style: none;
+}
+
+#dlogin{
+    position:absolute;
+    width:50%;
+    height:50%;
+    z-index:15;
+    top:50%;
+    left:50%;
+    margin:-10% 0 0 -10%;
+    max-width: 400px;
+    max-height: 300px;
+}
+
+#home{
+    width: 28%;
+    float: left;
+    padding: 0 0 0 1%;
+}
+
+#data{
+    width: 70%;
+    float: right;
+}
+
+#data li{
+    line-height: 100%;
+    list-style: none;
+}
+footer{
+    position:fixed;
+    bottom:0;
+    padding: 5px;
+    float: right;
+}
+
+form#login ol li {
+    line-height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    line-height: 30px;
+    list-style: none;
+}
+
+form#addfind ol li {
+    line-height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    line-height: 30px;
+    list-style: none;
+}
+
+form#login{
+    padding: 20px;
+}
+
+form#login input{
+    width:50%;
+    min-width: 70px;
+}
+
+form#login fieldset{
+    border: none;
+    margin-bottom: 10px;
+    background: #848484;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 30px;
+    
+}
+
+form#login fieldset:last-of-type {
+    margin-bottom: 0;
+}
+
+form#login legend {
+    color: black;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+form#login label {
+    color: white;
+    float: left;
+    font-size: 13px;
+    width: 30%;
+}
+
+#find{
+    cursor: pointer;
+}
+#afind{
+    display: none;
+   
+}
+.search{
+    width: 100%;
+}
+
+.prov{
+    float:left;
+    padding-right: 10%;
+}
+.words{
+    margin:0 auto;
+}
+.close{
+    float:right;
+    cursor: pointer;
+}
+
+.find{
+    border: 1px solid black;
+}
+.results{
+    margin: 0 auto;
+    padding-right: 1%;
+    width: 30%;
+}
+.meta{
+    float:left;
+    padding-right: 1%;
+    margin: 0 auto;
+    width: 30%;
+}
+.date{
+    float:right;
+    padding-right: 1%;
+    width: 30%;
+}
+.words1{
+    float: right;
+    width: 45%;
+}
+.provinces{
+    width: 45%;
+}
+.total{
+    float: right;
+    width: 45%;
+}
+.efective{
+    width: 45%;
+}
+
+.find{
+    cursor: pointer;
+}
+.hidden{
+    display: none;
+}

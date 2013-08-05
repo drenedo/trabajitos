@@ -1,0 +1,32 @@
+{% include 'header.html' %}
+<div id=dlogin>
+<div id=errors>
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+<form id=login action="/login/" method="post">
+    {% csrf_token %}
+    <fieldset>
+		<legend>Login</legend>
+                <ol>
+			<li>
+				<label for=name>User</label>
+				<input id=username name=username type=text placeholder="User" required autofocus>
+			</li>
+			<li>
+				<label for=name>Password</label>
+				<input id=password name=password type=password placeholder="Password" required autofocus>
+			</li>
+                        <li id=sslogin>
+				<input id=slogin name=slogin type=submit value=login>
+			</li>
+                </ol>
+    </fieldset>
+</form>
+</div>
+{% include 'footer.html' %}
