@@ -39,7 +39,7 @@ class Command(NoArgsCommand):
             
             print pjoblist.__len__()
             if afind:
-                infologin = InfoJobsLogin("peybon79@gmail.com","javi652858710",browser)
+                infologin = InfoJobsLogin("user@gmail.com","pass",browser)
                 browser = infologin.login()
             
                 for i in pjoblist:
