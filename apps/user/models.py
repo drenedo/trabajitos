@@ -23,3 +23,8 @@ class Job(models.Model):
     user = models.ForeignKey(User)
     class Meta:
         unique_together = (('url', 'user',),('siteid', 'user',))
+        
+class Account(models.Model):
+    login = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, related_name="model", null=True, blank=True)

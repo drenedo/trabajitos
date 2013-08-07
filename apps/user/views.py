@@ -12,10 +12,12 @@ from django.utils.functional import curry
 
 from json import dumps, loads, JSONEncoder
 
-from trabajitos.apps.user.models import Search, Find, Job
+from trabajitos.apps.user.models import Search, Find, Job, Account
 from trabajitos.apps.user.vmodels import ViewFind,MyEncoder
 
 from models import Search
+
+import time
 
 
 def index(request):
@@ -55,9 +57,14 @@ def logoutu(request):
 def home(request):
     template = loader.get_template('home.html')
     context = RequestContext(request)
-    finds = Find.objects.order_by('-date','-time')[0:20]
-    request.session['finds'] = finds
-    return render(request,'home.html',{'finds':finds})
+    account = Account.objects.filter(Q(user=request.user))[:1]
+    if account and account.__len__()>0:
+        login = account[0].login
+        password = account[0].password
+    else:
+        login = ''
+        password = ''
+    return render(request,'home.html',{'login':login,'password':password})
 
 @login_required
 def addfind(request):
@@ -78,9 +85,16 @@ def mysearchs(request):
 
 
 @login_required
-def myfinds(request):
+def myfinds(request, count=None):
+    start = 0
+    end = 40
+    if count > 0:
+        start = int(40)*int(count)
+        end= int(start)+int(40)
+    print str(start)+" "+str(end)
+    time.sleep(2)
     searchs = Search.objects.filter(Q(user=request.user))
-    finds = Find.objects.all().filter(search_id__in=searchs).order_by('-date','-time')[0:40]
+    finds = Find.objects.all().filter(search_id__in=searchs).order_by('-date','-time')[start:end]
     views = []
     for find in finds:
         for search in searchs:
@@ -101,3 +115,17 @@ def myjobs(request, id=None):
         data = serializers.serialize('json', tries)
         
     return HttpResponse(data, mimetype='application/json')
+
+@login_required
+def changeaccount(request):
+    login = request.POST['login']
+    password = request.POST['password']
+    account = Account.objects.filter(Q(user=request.user))[:1]
+    if account and account.__len__()>0:
+        account[0].login=login
+        account[0].password=password
+        account[0].save()
+    else:
+        account = Account(login=login,password=password,user=request.user)
+        account.save()
+    return home(request)

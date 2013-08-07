@@ -1,3 +1,6 @@
+var actionScroll = false;
+var scrollCount = 0;
+
 var Search = Backbone.Collection.extend({
     url: '/mysearchs/'
 });
@@ -22,23 +25,31 @@ var SearchList = Backbone.View.extend({
 });
 
 var Find = Backbone.Collection.extend({
-    url: '/myfinds/'
+    initialize: function(models, options) {
+        this.id = options.id;
+    },
+    url: function() {
+        return '/myfinds/' + this.id + '/';
+    }
 });
 
 var FindList = Backbone.View.extend({
     el: '#data',
     initialize: function(){
-         this.render();
+        actionScroll = true;
+        this.render();
     },
     render: function () {
         var that = this;
-        var find = new Find();
+        var find = new Find([], { id: scrollCount });
         find.fetch({
             success: function(find) {
                 var JSON = find.toJSON();
                 console.log(JSON);
                 var template = _.template($('#finds_template').html(), {finds: JSON});
-                that.$el.html(template);
+                that.$el.append(template);
+                actionScroll = false;
+                scrollCount = scrollCount+1;
             }
         })
     }
@@ -62,7 +73,7 @@ var JobList = Backbone.View.extend({
     },
     render: function () {
         var that = this;
-        var job = new Job([], { id: this.options.id });
+        var job = new Job([], { id: scrollCount });
         job.fetch({
             success: function(job) {
                 var JSON = job.toJSON();
@@ -83,6 +94,21 @@ $(document).ready(function() {
             $("#afind").show('blind', 250);
         
         var searchList = new SearchList();
+        }
+    });
+    $("#account").click(function(){
+        if ($("#aaccount").css('display')!='none') {
+            $("#aaccount").hide('blind', 250);
+        }else{
+            $("#aaccount").show('blind', 250);
+        }
+    });
+    
+    $(window).scroll(function() {
+        if  ($(window).scrollTop()+200 >= ($(document).height() - ($(window).height()))){
+            if (actionScroll == false) {
+                var findList = new FindList();
+            }
         }
     });
     

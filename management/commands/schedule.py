@@ -6,7 +6,7 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from django.core.management.base import NoArgsCommand
 from django.db.models import Q
 
-from trabajitos.apps.user.models import Search, Find, Job
+from trabajitos.apps.user.models import Search, Find, Job, Account
 from trabajitos.apps.infojobs.infojobs import InfojobsSearch, InfoJobsJoin, InfoJobsLogin
 
 class Command(NoArgsCommand):
@@ -39,7 +39,16 @@ class Command(NoArgsCommand):
             
             print pjoblist.__len__()
             if afind:
-                infologin = InfoJobsLogin("user@gmail.com","pass",browser)
+                account = Account.objects.filter(Q(user=search.user))[:1]
+                login=''
+                password=''
+                if account and account.__len__()>0:
+                    login = account[0].login
+                    password = account[0].password
+                else:
+                    continue
+                
+		infologin = InfoJobsLogin(login,password,browser)
                 browser = infologin.login()
             
                 for i in pjoblist:

@@ -38,13 +38,34 @@
 </script>
 
 <div id=home>
+    <div id=account>Infojobs account</div>
+    <div id=aaccount>
+        <form id=addfind action="/changeaccount/" method="post">
+            {% csrf_token %}
+            <fieldset class=mark>
+                <ul>
+			<li>
+				<label for=name>Login</label>
+				<input id=login name=login type=text placeholder="Login" value="{{login}}" required autofocus>
+			</li>
+			<li>
+				<label for=name>Password</label>
+				<input id=password name=password type=text placeholder="Password" value="{{password}}" required autofocus>
+			</li>
+                        <li id=ssaddfind>
+				<input id=modify name=modify type=submit value=modify>
+			</li>
+                </ul>
+            </fieldset>
+        </form>
+    </div>
     <div id=find>Find</div>
     <div id=afind>
         <form id=addfind action="/addfind/" method="post">
         {% csrf_token %}
             <fieldset class=mark>
 		<legend>Add Find</legend>
-                <ol>
+                <ul>
 			<li>
 				<label for=name>Words</label>
 				<input id=words name=words type=text placeholder="Words" required autofocus>
@@ -64,7 +85,7 @@
                         <li id=ssaddfind>
 				<input id=add name=add type=submit value=add>
 			</li>
-                </ol>
+                </ul>
                 <div id=searchs></div>
             </fieldset>
         </form>

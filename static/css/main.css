@@ -68,6 +68,18 @@ h1{
     float: left;
     padding: 0 0 0 1%;
 }
+#home ul{
+    list-style-type: none;
+    padding: 0;
+}
+#home ul input[type="text"]{
+    float: right;
+    width: 45%;
+}
+#home ul label{
+    float: left;
+    width: 45%;
+}
 
 #data{
     width: 70%;
@@ -146,7 +158,13 @@ form#login label {
 }
 #afind{
     display: none;
-   
+}
+
+#account{
+    cursor: pointer;
+}
+#aaccount{
+    display: none;
 }
 .search{
     width: 100%;
