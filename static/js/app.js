@@ -37,7 +37,10 @@ var FindList = Backbone.View.extend({
     el: '#data',
     initialize: function(){
         actionScroll = true;
-        this.render();
+        if (scrollCount>=0) {
+            $("#loader").css("display","inline");
+            this.render();
+        }
     },
     render: function () {
         var that = this;
@@ -45,11 +48,16 @@ var FindList = Backbone.View.extend({
         find.fetch({
             success: function(find) {
                 var JSON = find.toJSON();
-                console.log(JSON);
+                if($.isEmptyObject(JSON)){
+                    scrollCount = -1;
+                    $("#loader").css("display","none");
+                    return;
+                }
                 var template = _.template($('#finds_template').html(), {finds: JSON});
                 that.$el.append(template);
                 actionScroll = false;
                 scrollCount = scrollCount+1;
+                $("#loader").css("display","none");
             }
         })
     }
@@ -73,7 +81,7 @@ var JobList = Backbone.View.extend({
     },
     render: function () {
         var that = this;
-        var job = new Job([], { id: scrollCount });
+        var job = new Job([], { id: this.options.id });
         job.fetch({
             success: function(job) {
                 var JSON = job.toJSON();

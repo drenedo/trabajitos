@@ -52,10 +52,11 @@ class Command(NoArgsCommand):
                 browser = infologin.login()
             
                 for i in pjoblist:
-                    for non in search.non.split(','):
-                        print "test"+non
-                        if "ong" in i:
-                            continue
+                    if search.non:
+                        for non in search.non.split(','):
+                            print "test"+non
+                            if non in i:
+                                continue
                     print i
                     previous = Job.objects.filter(Q(user=search.user) & Q(url=i))
                 

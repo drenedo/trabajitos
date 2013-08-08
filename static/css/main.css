@@ -166,6 +166,13 @@ form#login label {
 #aaccount{
     display: none;
 }
+#loader{
+    background: url(../images/ploader.gif) no-repeat center;
+    width: 70%;
+    float: right;
+    height: 30px;
+    display: none;
+}
 .search{
     width: 100%;
 }
