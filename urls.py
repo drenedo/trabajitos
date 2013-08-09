@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^addfind/$', views.addfind, name='addfind'),
     url(r'^mysearchs/', views.mysearchs, name='mysearchs'),
     url(r'^myfinds/(?P<count>\d{1,40})/$', views.myfinds, name='myfinds'),
+    url(r'^mygoodfinds/(?P<count>\d{1,40})/$', views.mygoodfinds, name='mygoodfinds'),
     url(r'^changeaccount/', views.changeaccount, name='changeaccount'),
     url(r'^myjobs/(?P<id>\d{1,40})/$', views.myjobs, name='myjobs'),
     

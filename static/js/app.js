@@ -1,6 +1,8 @@
 var actionScroll = false;
 var scrollCount = 0;
 
+var all=true;
+
 var Search = Backbone.Collection.extend({
     url: '/mysearchs/'
 });
@@ -29,7 +31,12 @@ var Find = Backbone.Collection.extend({
         this.id = options.id;
     },
     url: function() {
-        return '/myfinds/' + this.id + '/';
+        if (all==true) {
+            return '/myfinds/' + this.id + '/';
+        }else{
+             return '/mygoodfinds/' + this.id + '/';
+        }
+        
     }
 });
 
@@ -119,6 +126,22 @@ $(document).ready(function() {
             }
         }
     });
+    
+    $("#all").click(function() {
+        if (all==true) {
+            all=false;
+            $("#all").html("Todas");
+            scrollCount = 0;
+            $("#data").html("");
+            loadFinds();
+        }else{
+            all=true;
+            $("#all").html("Buenas");
+            scrollCount = 0;
+            $("#data").html("");
+            loadFinds();
+        }
+    })
     
     loadFinds();
 });

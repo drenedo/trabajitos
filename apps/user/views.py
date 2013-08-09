@@ -109,6 +109,31 @@ def myfinds(request, count=None):
     return HttpResponse(data, mimetype='application/json')
 
 @login_required
+def mygoodfinds(request, count=None):
+    start = 0
+    end = 40
+    if count > 0:
+        start = int(40)*int(count)
+        end= int(start)+int(40)
+    print str(start)+" "+str(end)
+    time.sleep(2)
+    searchs = Search.objects.filter(Q(user=request.user))
+    finds = Find.objects.all().filter(search_id__in=searchs).filter(efective__gt=0).order_by('-date','-time')[start:end]
+    views = []
+    for find in finds:
+        for search in searchs:
+            if search.id == find.search.id :
+                views.append(ViewFind(search=search,find=find))
+                #find.search = search
+                break
+        
+    
+    data = dumps(views, cls=MyEncoder)
+    #data = serializers.serialize('json', finds)
+    return HttpResponse(data, mimetype='application/json')
+
+
+@login_required
 def myjobs(request, id=None):
     if id:
         tries = Job.objects.filter(Q(find=id)&Q(user=request.user))
