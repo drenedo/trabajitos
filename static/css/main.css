@@ -65,6 +65,7 @@ h1{
 
 #home{
     width: 28%;
+    /*min-width: 180px;*/
     float: left;
     padding: 0 0 0 1%;
 }
@@ -83,6 +84,7 @@ h1{
 
 #data{
     width: 70%;
+    /*min-width: 360px;*/
     float: right;
 }
 
@@ -228,4 +230,11 @@ form#login label {
 }
 .hidden{
     display: none;
+}
+
+@media(max-width: 620px)
+{
+    #home{clear:both;width:100%; min-width:100%;float:clear}
+    #data{clear:both;width:100%; min-width:100%;float:clear}
+    footer{display:none}
 }

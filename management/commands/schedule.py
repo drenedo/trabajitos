@@ -53,10 +53,13 @@ class Command(NoArgsCommand):
             
                 for i in pjoblist:
                     if search.non:
+                        nexto = False
                         for non in search.non.split(','):
-                            print "test"+non
+                            print "test::"+non
                             if non in i:
-                                continue
+                                nexto = True
+                        if nexto:
+                            continue
                     print i
                     previous = Job.objects.filter(Q(user=search.user) & Q(url=i))
                 
