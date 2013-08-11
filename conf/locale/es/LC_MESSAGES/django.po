@@ -1,0 +1,60 @@
+#: apps/user/templates/footer.html:1
+msgid "footer"
+msgstr "Shhhhh"
+
+#: apps/user/templates/home.html:41
+msgid "ijaccount"
+msgstr "Cuanta de infojobs"
+
+#: apps/user/templates/home.html:48 apps/user/templates/home.html.py:49
+msgid "login"
+msgstr "Usuario"
+
+#: apps/user/templates/home.html:52 apps/user/templates/home.html.py:53
+#: apps/user/templates/index.html:22 apps/user/templates/index.html.py:23
+msgid "pass"
+msgstr "Contrasena"
+
+#: apps/user/templates/home.html:62
+msgid "find"
+msgstr "Busqueda"
+
+#: apps/user/templates/home.html:67
+msgid "addfind"
+msgstr "Anadir busqueda"
+
+#: apps/user/templates/home.html:70 apps/user/templates/home.html.py:71
+msgid "words"
+msgstr "Palabras"
+
+#: apps/user/templates/home.html:74 apps/user/templates/home.html.py:75
+msgid "provinces"
+msgstr "Provincias"
+
+#: apps/user/templates/home.html:78 apps/user/templates/home.html.py:79
+msgid "wfilter"
+msgstr "Palabras prohibidas"
+
+#: apps/user/templates/home.html:82 apps/user/templates/home.html.py:83
+msgid "lfilter"
+msgstr "Localidades"
+
+#: apps/user/templates/home.html:86
+msgid "badd"
+msgstr "Anadir"
+
+#: apps/user/templates/index.html:18 apps/user/templates/index.html.py:19
+msgid "user"
+msgstr "Usuario"
+
+#: apps/user/templates/index.html:26
+msgid "acces"
+msgstr "acceder"
+
+#: apps/user/templates/uheader.html:2
+msgid "good"
+msgstr "Buenas"
+
+#: apps/user/templates/uheader.html:2
+msgid "logout"
+msgstr "Desconectar"

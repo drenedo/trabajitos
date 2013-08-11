@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^mygoodfinds/(?P<count>\d{1,40})/$', views.mygoodfinds, name='mygoodfinds'),
     url(r'^changeaccount/', views.changeaccount, name='changeaccount'),
     url(r'^myjobs/(?P<id>\d{1,40})/$', views.myjobs, name='myjobs'),
-    
+     url(r'^i18n/', include('django.conf.urls.i18n')),
     
     url(r'^admin/', include(admin.site.urls)),
 )

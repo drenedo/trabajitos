@@ -91,8 +91,6 @@ def myfinds(request, count=None):
     if count > 0:
         start = int(40)*int(count)
         end= int(start)+int(40)
-    print str(start)+" "+str(end)
-    time.sleep(2)
     searchs = Search.objects.filter(Q(user=request.user))
     finds = Find.objects.all().filter(search_id__in=searchs).order_by('-date','-time')[start:end]
     views = []
@@ -115,8 +113,6 @@ def mygoodfinds(request, count=None):
     if count > 0:
         start = int(40)*int(count)
         end= int(start)+int(40)
-    print str(start)+" "+str(end)
-    time.sleep(2)
     searchs = Search.objects.filter(Q(user=request.user))
     finds = Find.objects.all().filter(search_id__in=searchs).filter(efective__gt=0).order_by('-date','-time')[start:end]
     views = []

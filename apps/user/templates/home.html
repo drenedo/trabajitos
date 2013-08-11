@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% include 'uheader.html' %}
 <script type="text/template" id="searchs_template">
     <% _.each(searchs, function(search) { %>
@@ -38,52 +40,52 @@
 </script>
 
 <div id=home>
-    <div id=account>Infojobs account</div>
+    <div id=account>{% trans "ijaccount" %}</div>
     <div id=aaccount>
         <form id=addfind action="/changeaccount/" method="post">
             {% csrf_token %}
             <fieldset class=mark>
                 <ul>
 			<li>
-				<label for=name>Login</label>
-				<input id=login name=login type=text placeholder="Login" value="{{login}}" required autofocus>
+				<label for=name>{% trans "login" %}</label>
+				<input id=login name=login type=text placeholder="{% trans "login" %}" value="{{login}}" required autofocus>
 			</li>
 			<li>
-				<label for=name>Password</label>
-				<input id=password name=password type=text placeholder="Password" value="{{password}}" required autofocus>
+				<label for=name>{% trans "pass" %}</label>
+				<input id=password name=password type=text placeholder="{% trans "pass" %}" value="{{password}}" required autofocus>
 			</li>
                         <li id=ssaddfind>
-				<input id=modify name=modify type=submit value=modify>
+				<input id=modify name=modify type=submit value={% trans "modify" %}>
 			</li>
                 </ul>
             </fieldset>
         </form>
     </div>
-    <div id=find>Find</div>
+    <div id=find>{% trans "find" %}</div>
     <div id=afind>
         <form id=addfind action="/addfind/" method="post">
         {% csrf_token %}
             <fieldset class=mark>
-		<legend>Add Find</legend>
+		<legend>{% trans "addfind" %}</legend>
                 <ul>
 			<li>
-				<label for=name>Words</label>
-				<input id=words name=words type=text placeholder="Words" required autofocus>
+				<label for=name>{% trans "words" %}</label>
+				<input id=words name=words type=text placeholder="{% trans "words" %}" required autofocus>
 			</li>
 			<li>
-				<label for=name>Provinces</label>
-				<input id=provinces name=provinces type=text placeholder="Provinces" required autofocus>
+				<label for=name>{% trans "provinces" %}</label>
+				<input id=provinces name=provinces type=text placeholder="{% trans "provinces" %}" required autofocus>
 			</li>
 			<li>
-				<label for=name>Non filter</label>
-				<input id=non name=non type=text placeholder="Non filter" autofocus>
+				<label for=name>{% trans "wfilter" %}</label>
+				<input id=non name=non type=text placeholder="{% trans "wfilter" %}" autofocus>
 			</li>
 			<li>
-				<label for=name>Locations</label>
-				<input id=non name=locations type=text placeholder="Locations" autofocus>
+				<label for=name>{% trans "lfilter" %}</label>
+				<input id=non name=locations type=text placeholder="{% trans "lfilter" %}" autofocus>
 			</li>
                         <li id=ssaddfind>
-				<input id=add name=add type=submit value=add>
+				<input id=add name=add type=submit value={% trans "badd" %}>
 			</li>
                 </ul>
                 <div id=searchs></div>

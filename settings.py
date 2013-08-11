@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 
 PROJECT_ROOT = os.path.dirname( os.path.abspath(__file__) )
@@ -35,7 +37,12 @@ TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'es'
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('es', 'Spanish'),
+)
 
 SITE_ID = 1
 
@@ -93,6 +100,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,6 +135,11 @@ INSTALLED_APPS = (
     'trabajitos.apps.infojobs',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+)
+
+
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/conf/locale', 
 )
 
 # A sample logging configuration. The only tangible logging

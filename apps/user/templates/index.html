@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% include 'header.html' %}
 <div id=dlogin>
 <div id=errors>
@@ -15,15 +17,15 @@
 		<legend>Login</legend>
                 <ol>
 			<li>
-				<label for=name>User</label>
-				<input id=username name=username type=text placeholder="User" required autofocus>
+				<label for=name>{% trans "user" %}</label>
+				<input id=username name=username type=text placeholder="{% trans "user" %}" required autofocus>
 			</li>
 			<li>
-				<label for=name>Password</label>
-				<input id=password name=password type=password placeholder="Password" required autofocus>
+				<label for=name>{% trans "pass" %}</label>
+				<input id=password name=password type=password placeholder="{% trans "pass" %}" required autofocus>
 			</li>
                         <li id=sslogin>
-				<input id=slogin name=slogin type=submit value=login>
+				<input id=slogin name=slogin type=submit value={% trans "acces" %}>
 			</li>
                 </ol>
     </fieldset>
