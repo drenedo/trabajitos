@@ -19,7 +19,10 @@ class Job(models.Model):
     find = models.ForeignKey(Find)
     status = models.IntegerField()
     url = models.CharField(max_length=255)
-    siteid = models.CharField(max_length=255)
+    siteid = models.TextField(max_length=255)
+    title = models.TextField()
+    company = models.TextField()
+    description = models.TextField()
     user = models.ForeignKey(User)
     class Meta:
         unique_together = (('url', 'user',),('siteid', 'user',))

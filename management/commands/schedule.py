@@ -7,7 +7,7 @@ from django.core.management.base import NoArgsCommand
 from django.db.models import Q
 
 from trabajitos.apps.user.models import Search, Find, Job, Account
-from trabajitos.apps.infojobs.infojobs import InfojobsSearch, InfoJobsJoin, InfoJobsLogin
+from trabajitos.apps.infojobs.infojobs import InfojobsSearch, InfoJobsJoin, InfoJobsLogin, InfojobsJob
 
 class Command(NoArgsCommand):
     help = 'Trow all queries to job\'s portal/s '
@@ -30,7 +30,8 @@ class Command(NoArgsCommand):
             afind = False
             pjoblist = []
             for i in joblist:
-                if not Job.objects.filter(Q(user=search.user) & Q(url=i)):
+                print i.href
+                if not Job.objects.filter(Q(user=search.user) & Q(url=i.href)):
                     afind = True
                     pjoblist.append(i)
             
@@ -48,15 +49,16 @@ class Command(NoArgsCommand):
                 else:
                     continue
                 
-		infologin = InfoJobsLogin(login,password,browser)
+                infologin = InfoJobsLogin(login,password,browser)
                 browser = infologin.login()
             
+                #TODO Aqui
                 for i in pjoblist:
                     if search.non:
                         nexto = False
                         for non in search.non.split(','):
                             print "test::"+non
-                            if non in i:
+                            if non in i.href or non in i.title or i.company:
                                 nexto = True
                         if nexto:
                             continue
@@ -67,7 +69,7 @@ class Command(NoArgsCommand):
                     if not previous or previous.__len__() <=0 :
                         infocommit = InfoJobsJoin(i,browser) 
                         state = infocommit.commit()
-                        job = Job(find=find,status=state,user=search.user,url=i,siteid=i)
+                        job = Job(find=find,status=state,user=search.user,url=i.href,siteid=i.href,title=i.title,company=i.company,description=i.description)
                         job.save()
                         find.efective = find.efective +1;
                     

@@ -7,6 +7,12 @@ from utils import remove_accents
 
 import time
 
+class InfojobsJob:
+    def __init__(self, href=None, title=None, company=None, description=None):
+        self.title=title
+        self.href=href
+        self.company=company
+        self.description=description
 
 class InfojobsSearch:
     def __init__(self, key=None, provlist=None, browser=None):
@@ -76,6 +82,7 @@ class InfojobsSearch:
                 if not find:
                     end = True
         
+        print "return jobs:"+str(joblist.__len__())
         return joblist
         
     def getData(self):
@@ -86,14 +93,35 @@ class InfojobsSearch:
             return joblist
 
         if lis:
-            titles = lis.find_elements_by_tag_name("h2")
+            lu = lis.find_element_by_tag_name("ul")
+            jobs = lu.find_elements_by_tag_name("li")
         
-            if titles.__len__()>0:
-                for work in titles:
-                    hrefs = work.find_elements_by_tag_name("a")
-                    for href in hrefs:
-                        joblist.append(href.get_attribute("href"))
+            if jobs.__len__()>0:
+                for job in jobs:
+                    divs = job.find_elements_by_tag_name("div")
+                    href=None
+                    title=None
+                    company=None
+                    description=None
+                    for div in divs:
+                        classname = div.get_attribute("class")
+                        if classname == 'description':
+                            title = div.find_element_by_tag_name("h2").text
+                            href = div.find_element_by_tag_name("a").get_attribute("href")
+                            company = div.find_element_by_tag_name("h3").text
+                        elif classname == 'details':
+                            description=div.find_element_by_tag_name("p").text
+                    
+                    ifj = InfojobsJob(href,title,company,description)
+                    if(ifj.href!=None):
+                        joblist.append(ifj)
+                        print "t:"+ifj.title
+                        print "h:"+ifj.href
+                        print "c:"+ifj.company
+                        print "d:"+ifj.description
+                        print "appended::"+str(joblist.__len__())
         
+        print "return part-jobs:"+str(joblist.__len__())
         return joblist
     
 class InfoJobsLogin:
