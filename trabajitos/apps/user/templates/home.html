@@ -5,6 +5,15 @@
 	var allMsg='{% trans "all" %}';
 	var goodMsg='{% trans "good" %}';
 </script>
+<script type="text/template" id="alerts_template">
+    <% _.each(alerts, function(alert) { %>
+        <div class=search>
+            <div class=prov><%= alert.fields.provinces %></div>
+            <div class=close onclick='javascript:alertdelete(<%= alert.pk %>)'>X</div>
+            <div class=words><%= alert.fields.words %></div>
+        </div>
+    <% }); %>
+</script>
 <script type="text/template" id="searchs_template">
     <% _.each(searchs, function(search) { %>
         <div class=search>
@@ -116,6 +125,7 @@
 						<input id=add name=add type=submit value={% trans "badd" %}>
 					</li>
                 </ul>
+                <div id=alerts></div>
         </form>
     </div>
 </div>

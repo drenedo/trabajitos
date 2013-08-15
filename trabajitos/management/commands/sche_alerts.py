@@ -45,8 +45,8 @@ class Command(NoArgsCommand):
             if jobalerts.__len__() > 0:
                 body = ''
                 for i in joblist:
-                    JobAlert(alert=alert,user=alert.user,url=i.href,siteid=i.href,title=i.title,company=i.company,description=i.description)
-                    
+                    jobalert = JobAlert(alert=alert,user=alert.user,url=i.href,siteid=i.href,title=i.title,company=i.company,description=i.description)
+                    jobalert.save()
                     body = body + i.title+" - "+i.company+"<br/>"+i.description+"<br/>"+i.href
                 #user = User.objects.get(id=alert.user)
                     

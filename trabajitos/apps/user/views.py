@@ -12,7 +12,7 @@ from django.utils.functional import curry
 
 from json import dumps, loads, JSONEncoder
 
-from trabajitos.apps.user.models import Search, Find, Job, Account, Alert
+from trabajitos.apps.user.models import Search, Find, Job, Account, Alert, JobAlert
 from trabajitos.apps.user.vmodels import ViewFind,MyEncoder
 
 from models import Search
@@ -93,6 +93,22 @@ def mysearchs(request):
     data = serializers.serialize('json', searchs)
     return HttpResponse(data, mimetype='application/json')
 
+@login_required
+def myalerts(request):
+    alerts = Alert.objects.filter(Q(user=request.user))
+    data = serializers.serialize('json', alerts)
+    return HttpResponse(data, mimetype='application/json')
+
+@login_required
+def myjobalert(request, count=None):
+    start = 0
+    end = 40
+    if count > 0:
+        start = int(40)*int(count)
+        end= int(start)+int(40)
+    jobalerts = JobAlert.objects.filter(Q(user=request.user)).order_by('-date','-time')[start:end]
+    data = serializers.serialize('json', jobalerts)
+    return HttpResponse(data, mimetype='application/json')
 
 @login_required
 def myfinds(request, count=None):

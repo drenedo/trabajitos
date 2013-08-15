@@ -3,6 +3,30 @@ var scrollCount = 0;
 
 var all=true;
 
+
+var Alert = Backbone.Collection.extend({
+    url: '/myalerts/'
+});
+
+var AlertList = Backbone.View.extend({
+    el: '#alerts',
+    initialize: function(){
+        this.render();
+    },
+    render: function () {
+        var that = this;
+        var alert = new Alert();
+        alert.fetch({
+            success: function(search) {
+                var JSON = search.toJSON();
+                console.log(JSON);
+                var template = _.template($('#alerts_template').html(), {alerts: JSON});
+                that.$el.html(template);
+            }
+        })
+    }
+});
+
 var Search = Backbone.Collection.extend({
     url: '/mysearchs/'
 });
@@ -108,7 +132,7 @@ $(document).ready(function() {
         }else{
             $("#afind").show('blind', 250);
         
-        var searchList = new SearchList();
+            var searchList = new SearchList();
         }
     });
     $("#alert").click(function(){
@@ -116,6 +140,8 @@ $(document).ready(function() {
             $("#aalert").hide('blind', 250);
         }else{
             $("#aalert").show('blind', 250);
+
+            var alertList = new AlertList();
         }
     });
     $("#account").click(function(){
@@ -162,6 +188,10 @@ function getTries(id){
     var div = $('#to'+id);
     if (div.css('display')=='none') {
         div.show('blind', 250);
+    }else{
+    	div.hide('blind', 250);
+    	div.css('display','none');
+    	div.html("");
     }
 }
 
