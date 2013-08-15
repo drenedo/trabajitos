@@ -4,57 +4,61 @@ msgstr "Shhhhh"
 
 #: apps/user/templates/home.html:41
 msgid "ijaccount"
-msgstr "Infojobs account"
+msgstr "Cuanta de infojobs"
 
 #: apps/user/templates/home.html:48 apps/user/templates/home.html.py:49
 msgid "login"
-msgstr "Login"
+msgstr "Usuario"
 
 #: apps/user/templates/home.html:52 apps/user/templates/home.html.py:53
 #: apps/user/templates/index.html:22 apps/user/templates/index.html.py:23
 msgid "pass"
-msgstr "Password"
+msgstr "Contrasena"
 
 #: apps/user/templates/home.html:62
 msgid "find"
-msgstr "Find"
+msgstr "Busqueda"
 
 #: apps/user/templates/home.html:67
 msgid "addfind"
-msgstr "Add find"
+msgstr "Anadir busqueda"
 
 #: apps/user/templates/home.html:70 apps/user/templates/home.html.py:71
 msgid "words"
-msgstr "Words"
+msgstr "Palabras"
 
 #: apps/user/templates/home.html:74 apps/user/templates/home.html.py:75
 msgid "provinces"
-msgstr "Provinces"
+msgstr "Provincias"
 
 #: apps/user/templates/home.html:78 apps/user/templates/home.html.py:79
 msgid "wfilter"
-msgstr "Non words"
+msgstr "Palabras prohibidas"
 
 #: apps/user/templates/home.html:82 apps/user/templates/home.html.py:83
 msgid "lfilter"
-msgstr "Location filter"
+msgstr "Localidades"
 
 #: apps/user/templates/home.html:86
 msgid "badd"
-msgstr "Add"
+msgstr "Anadir"
 
 #: apps/user/templates/index.html:18 apps/user/templates/index.html.py:19
 msgid "user"
-msgstr "User"
+msgstr "Usuario"
 
 #: apps/user/templates/index.html:26
 msgid "acces"
-msgstr "login"
+msgstr "acceder"
 
 #: apps/user/templates/uheader.html:2
 msgid "good"
-msgstr "Good"
+msgstr "Buenas"
 
 #: apps/user/templates/uheader.html:2
 msgid "logout"
-msgstr "Logout"
+msgstr "Desconectar"
+
+
+msgid "all"
+msgstr "Todas"

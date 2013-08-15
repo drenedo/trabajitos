@@ -111,6 +111,13 @@ $(document).ready(function() {
         var searchList = new SearchList();
         }
     });
+    $("#alert").click(function(){
+        if ($("#aalert").css('display')!='none') {
+            $("#aalert").hide('blind', 250);
+        }else{
+            $("#aalert").show('blind', 250);
+        }
+    });
     $("#account").click(function(){
         if ($("#aaccount").css('display')!='none') {
             $("#aaccount").hide('blind', 250);
@@ -130,13 +137,13 @@ $(document).ready(function() {
     $("#all").click(function() {
         if (all==true) {
             all=false;
-            $("#all").html("Todas");
+            $("#all").html(allMsg);
             scrollCount = 0;
             $("#data").html("");
             loadFinds();
         }else{
             all=true;
-            $("#all").html("Buenas");
+            $("#all").html(goodMsg);
             scrollCount = 0;
             $("#data").html("");
             loadFinds();

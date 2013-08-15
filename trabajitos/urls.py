@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^home/$', views.home, name='home'),
     
     url(r'^addfind/$', views.addfind, name='addfind'),
+    url(r'^addalert/$', views.addalert, name='addalert'),
     url(r'^mysearchs/', views.mysearchs, name='mysearchs'),
     url(r'^myfinds/(?P<count>\d{1,40})/$', views.myfinds, name='myfinds'),
     url(r'^mygoodfinds/(?P<count>\d{1,40})/$', views.mygoodfinds, name='mygoodfinds'),

@@ -12,7 +12,7 @@ from django.utils.functional import curry
 
 from json import dumps, loads, JSONEncoder
 
-from trabajitos.apps.user.models import Search, Find, Job, Account
+from trabajitos.apps.user.models import Search, Find, Job, Account, Alert
 from trabajitos.apps.user.vmodels import ViewFind,MyEncoder
 
 from models import Search
@@ -75,6 +75,16 @@ def addfind(request):
     if words and provinces:
         search = Search(provinces=provinces,words=words,user=request.user,non=non,locations=locations)
         search.save()
+    return home(request)
+
+
+@login_required
+def addalert(request):
+    words = request.POST['words']
+    provinces = request.POST['provinces']
+    if words and provinces:
+        alert = Alert(provinces=provinces,words=words,user=request.user)
+        alert.save()
     return home(request)
 
 @login_required

@@ -10,7 +10,7 @@ from trabajitos.apps.user.models import Search, Find, Job, Account
 from trabajitos.apps.infojobs.infojobs import InfojobsSearch, InfoJobsJoin, InfoJobsLogin, InfojobsJob
 
 class Command(NoArgsCommand):
-    help = 'Trow all queries to job\'s portal/s '
+    help = 'Trow all queries to join job\'s portal/s '
     
     def handle(self, *args, **options):
         searchs = Search.objects.all()
@@ -20,8 +20,11 @@ class Command(NoArgsCommand):
             find = Find(search=search,total=0,efective=0)
             find.save()
             
+            useragent = sample(settings.USER_AGENTS,1)[0]
+            print useragent
+            
             firefoxProfile = FirefoxProfile()
-            firefoxProfile.set_preference("general.useragent.override", "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us)")
+            firefoxProfile.set_preference("general.useragent.override", useragent)
             browser = webdriver.Firefox(firefoxProfile)
             
             
@@ -62,12 +65,12 @@ class Command(NoArgsCommand):
                                 nexto = True
                         if nexto:
                             continue
-                    print i
-                    previous = Job.objects.filter(Q(user=search.user) & Q(url=i))
+                    print i.href
+                    previous = Job.objects.filter(Q(user=search.user) & Q(url=i.href))
                 
                     print previous
                     if not previous or previous.__len__() <=0 :
-                        infocommit = InfoJobsJoin(i,browser) 
+                        infocommit = InfoJobsJoin(i.href,browser) 
                         state = infocommit.commit()
                         job = Job(find=find,status=state,user=search.user,url=i.href,siteid=i.href,title=i.title,company=i.company,description=i.description)
                         job.save()

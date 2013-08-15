@@ -170,6 +170,13 @@ form#login label {
 #aaccount{
     display: none;
 }
+
+#alert{
+    cursor: pointer;
+}
+#aalert{
+    display: none;
+}
 #loader{
     background: url(../images/ploader.gif) no-repeat center;
     width: 70%;

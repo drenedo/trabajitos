@@ -1,6 +1,10 @@
 {% load i18n %}
 
 {% include 'uheader.html' %}
+<script type="text/javascript">
+	var allMsg='{% trans "all" %}';
+	var goodMsg='{% trans "good" %}';
+</script>
 <script type="text/template" id="searchs_template">
     <% _.each(searchs, function(search) { %>
         <div class=search>
@@ -34,7 +38,8 @@
 <script type="text/template" id="jobs_template">
     <% _.each(jobs, function(job) { %>
         <div id=job<%= job.pk %> class=job>
-            <a href="<%= job.fields.url %>" ><%= job.fields.url %></a>
+            <a href="<%= job.fields.url %>" ><%= job.fields.title %></a> - <%= job.fields.company %>
+			<div><%= job.fields.description %></div>
         </div>
     <% }); %>
 </script>
@@ -90,6 +95,27 @@
                 </ul>
                 <div id=searchs></div>
             </fieldset>
+        </form>
+    </div>
+    <div id=alert>{% trans "alerts" %}</div>
+    <div id=aalert>
+        <form id=addalert action="/addalert/" method="post">
+        	{% csrf_token %}
+            <fieldset class=mark>
+				<legend>{% trans "addalert" %}</legend>
+                <ul>
+					<li>
+						<label for=name>{% trans "words" %}</label>
+						<input id=words name=words type=text placeholder="{% trans "words" %}" required autofocus>
+					</li>
+					<li>
+						<label for=name>{% trans "provinces" %}</label>
+						<input id=provinces name=provinces type=text placeholder="{% trans "provinces" %}" required autofocus>
+					</li>
+					<li id=ssaddfind>
+						<input id=add name=add type=submit value={% trans "badd" %}>
+					</li>
+                </ul>
         </form>
     </div>
 </div>
