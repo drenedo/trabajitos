@@ -5,6 +5,9 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 
 from django.core.management.base import NoArgsCommand
 from django.db.models import Q
+from django.conf import settings
+
+from random import sample
 
 from trabajitos.apps.user.models import Search, Find, Job, Account
 from trabajitos.apps.infojobs.infojobs import InfojobsSearch, InfoJobsJoin, InfoJobsLogin, InfojobsJob

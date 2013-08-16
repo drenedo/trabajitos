@@ -52,6 +52,14 @@
         </div>
     <% }); %>
 </script>
+<script type="text/template" id="jalerts_template">
+    <% _.each(jalerts, function(jalert) { %>
+        <div id=job<%= jalert.pk %> class=job>
+            <a href="<%= jalert.fields.url %>" ><%= jalert.fields.title %></a> - <%= jalert.fields.company %>
+			<div><%= jalert.fields.description %></div>
+        </div>
+    <% }); %>
+</script>
 
 <div id=home>
     <div id=account>{% trans "ijaccount" %}</div>

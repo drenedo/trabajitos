@@ -50,6 +50,45 @@ var SearchList = Backbone.View.extend({
     }
 });
 
+var JAlert = Backbone.Collection.extend({
+    initialize: function(models, options) {
+        this.id = options.id;
+    },
+    url: function() {
+        return '/myjobalert/' + this.id + '/';
+    }
+});
+
+var JAlertList = Backbone.View.extend({
+    el: '#data',
+    initialize: function(){
+        actionScroll = true;
+        if (scrollCount>=0) {
+            $("#loader").css("display","inline");
+            this.render();
+        }
+    },
+    render: function () {
+        var that = this;
+        var jalert = new JAlert([], { id: scrollCount });
+        jalert.fetch({
+            success: function(jalert) {
+                var JSON = jalert.toJSON();
+                if($.isEmptyObject(JSON)){
+                    scrollCount = -1;
+                    $("#loader").css("display","none");
+                    return;
+                }
+                var template = _.template($('#jalerts_template').html(), {jalerts: JSON});
+                that.$el.append(template);
+                actionScroll = false;
+                scrollCount = scrollCount+1;
+                $("#loader").css("display","none");
+            }
+        })
+    }
+});
+
 var Find = Backbone.Collection.extend({
     initialize: function(models, options) {
         this.id = options.id;
@@ -174,7 +213,14 @@ $(document).ready(function() {
             $("#data").html("");
             loadFinds();
         }
-    })
+    });
+    
+
+    $("#jobalerts").click(function() {
+    	$("#data").html("");
+        scrollCount = 0;
+    	loadJAlerts();
+    });
     
     loadFinds();
 });
@@ -197,5 +243,10 @@ function getTries(id){
 
 function loadFinds() {    
     var findList = new FindList();
+}
+
+
+function loadJAlerts() {    
+    var jAlertList = new JAlertList();
 }
     
