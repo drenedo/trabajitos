@@ -201,7 +201,18 @@ form#login label {
 }
 
 .find{
-    border: 1px solid black;
+	border-bottom : 3px solid #c7d7e0;
+    margin: 0;
+}
+.hasjobs{
+    cursor: pointer;
+    background: #bcc0c3;
+	color:#424242;
+	font-weight:bold;
+}
+.perc{
+	background: #365DA0;
+	height: 4px;
 }
 .results{
     margin: 0 auto;
@@ -234,13 +245,28 @@ form#login label {
     width: 45%;
 }
 
-.find{
-    cursor: pointer;
-}
 .hidden{
     display: none;
 }
 
+.ljob:link, .ljob:visited, .ljob:active{
+	font-weight:bold;
+	color:#365DA0;
+	text-decoration: none;
+}
+.ljob:hover{
+	font-weight:bold;
+	color:red;
+}
+#data ul li{
+	border-bottom : 3px solid #c7d7e0;
+	/*list-style: square url("/static/images/jobHeader.png");*/
+}
+#data ul{
+	background-image:url('/static/images/blueshadow.png');
+	background-repeat:repeat-y;
+    margin: 0;
+}
 @media(max-width: 620px)
 {
     #home{clear:both;width:100%; min-width:100%;float:clear}

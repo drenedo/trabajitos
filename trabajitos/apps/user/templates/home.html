@@ -26,11 +26,11 @@
 <script type="text/template" id="finds_template">
     <% _.each(finds, function(find) { %>
         <div id=find<%= find.id %>
-                <% if (typeof(date) != "undefined") { %>
-    <span class="date"><%= date %></span>
-<% } %>
-                onclick=getTries(<%= find.id %>) class=find
-            >
+                onclick=getTries(<%= find.id %>) class="find
+				<% if (find.efective > 0) { %>
+    				hasjobs
+				<% } %>
+            ">
             <div class=meta>
                 <div class=words1><%= find.words %></div>
                 <div class=provinces><%= find.provinces %></div>
@@ -41,15 +41,16 @@
                 <div class=efective>Efective:<%= find.efective %></div>
             </div>
         </div>
-        <div id=to<%= find.id %> class=hidden ></div>
+        <div class=perc style="width:<% if (find.efective > 0) { %><%= (find.efective*100)/find.total %>%<% }else{ %>0%;height:0;<% } %>"></div>
+        <ul id=to<%= find.id %> class=hidden ></ul>
     <% }); %>
 </script>
 <script type="text/template" id="jobs_template">
     <% _.each(jobs, function(job) { %>
-        <div id=job<%= job.pk %> class=job>
-            <a href="<%= job.fields.url %>" ><%= job.fields.title %></a> - <%= job.fields.company %>
+        <li id=job<%= job.pk %> class=job>
+            <a class=ljob href="<%= job.fields.url %>" ><%= job.fields.title %></a> - <%= job.fields.company %>
 			<div><%= job.fields.description %></div>
-        </div>
+        </li>
     <% }); %>
 </script>
 <script type="text/template" id="jalerts_template">

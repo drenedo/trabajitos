@@ -152,12 +152,16 @@ var JobList = Backbone.View.extend({
     render: function () {
         var that = this;
         var job = new Job([], { id: this.options.id });
+        var toggle = this.options.toggle
         job.fetch({
             success: function(job) {
                 var JSON = job.toJSON();
                 console.log(JSON);
                 var template = _.template($('#jobs_template').html(), {jobs: JSON});
                 that.$el.html(template);
+                if(toggle && toggle==true){
+                	that.$el.toggle(150*that.$el.find('li').size());
+                }
             }
         })
     }
@@ -230,15 +234,19 @@ function adelete(id){
 }
 
 function getTries(id){
-    var jobList = new JobList({id : id, el : '#to'+id});
-    var div = $('#to'+id);
+	var div = $('#to'+id);
     if (div.css('display')=='none') {
-        div.show('blind', 250);
+        var jobList = new JobList({id : id, el : '#to'+id, toggle: true});
     }else{
-    	div.hide('blind', 250);
-    	div.css('display','none');
-    	div.html("");
+    	div.toggle(150*div.find('li').size());
     }
+    /*var div = $('#to'+id);
+    div.toggle(150*div.find('li').size());
+    if (div.css('display')=='none') {
+        div.show('blind', 550*div.find('li').size());
+    }else{
+    	div.hide('blind', 150*div.find('li').size(), function(){div.css('display','none');div.html("");});
+    }*/
 }
 
 function loadFinds() {    

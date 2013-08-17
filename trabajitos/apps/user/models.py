@@ -48,3 +48,6 @@ class JobAlert(models.Model):
     company = models.TextField()
     description = models.TextField()
     user = models.ForeignKey(User)
+    
+    class Meta:
+        unique_together = (('url', 'user',),('siteid', 'user',))
