@@ -28,6 +28,8 @@ class Command(NoArgsCommand):
             
             firefoxProfile = FirefoxProfile()
             firefoxProfile.set_preference("general.useragent.override", useragent)
+            firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false')
+            firefoxProfile.set_preference('permissions.default.image', 2)
             browser = webdriver.Firefox(firefoxProfile)
             
             

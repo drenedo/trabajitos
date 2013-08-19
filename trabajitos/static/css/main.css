@@ -15,7 +15,7 @@ h1{
     background-color: #81DAF5;
 }
 .mark{
-    border-width:6px;
+    border:3px solid #81DAF5;
 }
 #navigation{
     background: #848484;
@@ -69,7 +69,6 @@ h1{
     width: 28%;
     /*min-width: 180px;*/
     float: left;
-    padding: 0 0 0 1%;
 }
 #home ul{
     list-style-type: none;
@@ -159,6 +158,8 @@ form#login label {
 
 #find{
     cursor: pointer;
+    padding: 0 0 0 1%;
+    background: #81DAF5;
 }
 #afind{
     display: none;
@@ -166,6 +167,8 @@ form#login label {
 
 #account{
     cursor: pointer;
+    padding: 0 0 0 1%;
+    background: #81DAF5;
 }
 #aaccount{
     display: none;
@@ -173,6 +176,8 @@ form#login label {
 
 #alert{
     cursor: pointer;
+    padding: 0 0 0 1%;
+    background: #81DAF5;
 }
 #aalert{
     display: none;

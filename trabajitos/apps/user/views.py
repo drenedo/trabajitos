@@ -18,6 +18,7 @@ from trabajitos.apps.user.vmodels import ViewFind,MyEncoder
 from models import Search
 
 import time
+from datetime import date, timedelta
 
 
 def index(request):
@@ -64,7 +65,17 @@ def home(request):
     else:
         login = ''
         password = ''
-    return render(request,'home.html',{'login':login,'password':password})
+        
+    startdate = date.today()
+    enddate = startdate + timedelta(-30)
+    
+    print str(startdate) + "---" + str(enddate)
+    
+    finds = Find.objects.all().filter(Q(date__range=[enddate,startdate]))
+    print str(finds.__len__())
+    partial = Job.objects.filter(find_id__in=finds).filter(Q(user=request.user)).count()
+    total = Job.objects.filter(Q(user=request.user)).count()
+    return render(request,'home.html',{'login':login,'password':password,'total':total,'partial':partial})
 
 @login_required
 def addfind(request):
