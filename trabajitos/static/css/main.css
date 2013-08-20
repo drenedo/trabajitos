@@ -268,10 +268,18 @@ form#login label {
 	/*list-style: square url("/static/images/jobHeader.png");*/
 }
 #data ul{
-	background-image:url('/static/images/blueshadow.png');
-	background-repeat:repeat-y;
+    background-image:url('/static/images/blueshadow.png');
+    background-repeat:repeat-y;
     margin: 0;
 }
+#statistics{
+    padding: 0 0 0 1%;
+    background-image:url('/static/images/sbackground.png');
+    background-repeat:repeat-x;
+    color: #365DA0;
+    font-weight: bold;
+}
+
 @media(max-width: 620px)
 {
     #home{clear:both;width:100%; min-width:100%;float:clear}

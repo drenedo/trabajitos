@@ -19,6 +19,7 @@ class Command(NoArgsCommand):
         searchs = Search.objects.all()
 
         for search in searchs:
+            
             print search.words+"::"+search.provinces
             find = Find(search=search,total=0,efective=0)
             find.save()
@@ -33,7 +34,17 @@ class Command(NoArgsCommand):
             browser = webdriver.Firefox(firefoxProfile)
             
             
-            infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
+            print "Searching..."
+            try:
+                infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
+            except Exception:
+                print "Something was wrong..."
+                try:
+                    infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
+                except Exception:
+                    #This no matter, sometimes infojobs portal make stranges redirections, maybe anti scraping, I don't know
+                    continue
+                
             joblist = infojobs.find()
             afind = False
             pjoblist = []

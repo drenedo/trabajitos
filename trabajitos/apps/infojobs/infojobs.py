@@ -65,20 +65,25 @@ class InfojobsSearch:
                 find = False
                 if lis:
                     for li in lis:
-                        href = li.find_elements_by_tag_name("a")
-                        if href.__len__()>0:
-                            try:
-                                pag = int(href[0].text)
-                            except ValueError:
-                                pag = -1
-                            if pag and pag-1 == page:
-                                page = int(href[0].text)
-                                find = True
-                                href[0].click
-                                self.browser.execute_script(href[0].get_attribute("href"))
-                                time.sleep(8)
-                                joblist.extend(self.getData())
-                                break
+                        try:
+                            href = li.find_elements_by_tag_name("a")
+                            if href.__len__()>0:
+                                try:
+                                    pag = int(href[0].text)
+                                except ValueError:
+                                    pag = -1
+                                if pag and pag-1 == page:
+                                    page = int(href[0].text)
+                                    find = True
+                                    href[0].click
+                                    self.browser.execute_script(href[0].get_attribute("href"))
+                                    time.sleep(8)
+                                    joblist.extend(self.getData())
+                                    break
+                        except Exception:
+                            print "Something was wrong..."
+                            pass
+                        
                 if not find:
                     end = True
         

@@ -7,7 +7,7 @@
 </script>
 <script type="text/template" id="alerts_template">
     <% _.each(alerts, function(alert) { %>
-        <div class=search>
+        <div id=alert<%= alert.pk %> class=search>
             <div class=prov><%= alert.fields.provinces %></div>
             <div class=close onclick='javascript:alertdelete(<%= alert.pk %>)'>X</div>
             <div class=words><%= alert.fields.words %></div>
@@ -16,7 +16,7 @@
 </script>
 <script type="text/template" id="searchs_template">
     <% _.each(searchs, function(search) { %>
-        <div class=search>
+        <div id=search<%= search.pk %> class=search>
             <div class=prov><%= search.fields.provinces %></div>
             <div class=close onclick='javascript:adelete(<%= search.pk %>)'>X</div>
             <div class=words><%= search.fields.words %></div>
@@ -32,13 +32,13 @@
 				<% } %>
             ">
             <div class=meta>
-                <div class=words1><%= find.words %></div>
-                <div class=provinces><%= find.provinces %></div>
+                <span class=words1><%= find.words %></span>
+                <span class=provinces><%= find.provinces %></span>
             </div>
             <div class=date><%= find.date %></div>
             <div class=results>
-                <div class=total>Total:<%= find.total %></div>
-                <div class=efective>Efective:<%= find.efective %></div>
+                <span class=total>Total:<%= find.total %></span>
+                <span class=efective>Efective:<%= find.efective %></span>
             </div>
         </div>
         <div class=perc style="width:<% if (find.efective > 0) { %><%= (find.efective*100)/find.total %>%<% }else{ %>0%;height:0;<% } %>"></div>
@@ -61,7 +61,7 @@
         </div>
     <% }); %>
 </script>
-<nav>total:{{total}} - last-30days:{{partial}}</nav>
+<nav id=statistics>total:{{total}} - last-30days:{{partial}}</nav>
 <div id=home>
     <div id=account>{% trans "ijaccount" %}</div>
     <div id=aaccount>

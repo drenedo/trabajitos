@@ -230,7 +230,37 @@ $(document).ready(function() {
 });
 
 function adelete(id){
-    alert(id);
+    $.ajax({
+	url: "/deletefind/"+id+"/",
+	dataType: "json",
+	success: function(data){
+	    if(data.state==false){
+		alert("comunication-error");
+	    }else{
+		$("#search"+id).remove();
+	    }
+	},
+	error: function(e, xhr){
+	    alert("comunication-error")   
+	}
+    });
+}
+
+function alertdelete(id){
+    $.ajax({
+	url: "/deletealert/"+id+"/",
+	dataType: "json",
+	success: function(data){
+	    if(data.state==false){
+		alert("comunication-error");
+	    }else{
+		$("#alert"+id).remove();
+	    }
+	},
+	error: function(e, xhr){
+	    alert("comunication-error")   
+	}
+    });
 }
 
 function getTries(id){

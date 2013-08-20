@@ -88,6 +88,23 @@ def addfind(request):
         search.save()
     return home(request)
 
+@login_required
+def deletealert(request, id=None):
+    try:
+        alert = Alert.objects.get(pk=id)
+        alert.delete()
+        return HttpResponse(dumps({'state': True}), mimetype='application/json')
+    except Exception:
+        return HttpResponse(dumps({'state': False}), mimetype='application/json')
+
+@login_required
+def deletefind(request, id=None):
+    try:
+        search = Search.objects.get(pk=id)
+        search.delete()
+        return HttpResponse(dumps({'state': True}), mimetype='application/json')
+    except Exception:
+        return HttpResponse(dumps({'state': False}), mimetype='application/json')
 
 @login_required
 def addalert(request):
