@@ -6,8 +6,8 @@ Trabajitos is an easy way to automate your typical actions in the job search sit
 For the time being trabajitos is not stable.
 
 
-requirementes
-=============
+requirements
+============
 
 Requires Python 2.7
 
