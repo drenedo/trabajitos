@@ -32,20 +32,20 @@ class Command(NoArgsCommand):
             firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false')
             firefoxProfile.set_preference('permissions.default.image', 2)
             browser = webdriver.Firefox(firefoxProfile)
+            browser.delete_all_cookies()
             
             
             print "Searching..."
-            try:
-                infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
-            except Exception:
-                print "Something was wrong..."
-                try:
-                    infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
-                except Exception:
-                    #This no matter, sometimes infojobs portal make stranges redirections, maybe anti scraping, I don't know
-                    continue
+            infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
                 
             joblist = infojobs.find()
+            if joblist.__len__() <=0 :
+                old_find = Find.objects.all().filter(search_id=search).order_by('-date','-time')[1]
+                if old_find and old_find.total>0:
+                    browser.delete_all_cookies()
+                    infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
+                    joblist = infojobs.find()
+            
             afind = False
             pjoblist = []
             for i in joblist:

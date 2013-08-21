@@ -47,6 +47,7 @@ class InfojobsSearch:
             time.sleep(2)
             palabra.send_keys('\n')
         
+        time.sleep(4)
         joblist = self.getData()
         time.sleep(2)
     
@@ -98,33 +99,41 @@ class InfojobsSearch:
             return joblist
 
         if lis:
-            lu = lis.find_element_by_tag_name("ul")
-            jobs = lu.find_elements_by_tag_name("li")
+            try:
+                lu = lis.find_element_by_tag_name("ul")
+                jobs = lu.find_elements_by_tag_name("li")
+            except NoSuchElementException:
+                return joblist
         
-            if jobs.__len__()>0:
+            if jobs and jobs.__len__()>0:
                 for job in jobs:
-                    divs = job.find_elements_by_tag_name("div")
-                    href=None
-                    title=None
-                    company=None
-                    description=None
-                    for div in divs:
-                        classname = div.get_attribute("class")
-                        if classname == 'description':
-                            title = div.find_element_by_tag_name("h2").text
-                            href = div.find_element_by_tag_name("a").get_attribute("href")
-                            company = div.find_element_by_tag_name("h3").text
-                        elif classname == 'details':
-                            description=div.find_element_by_tag_name("p").text
-                    
-                    ifj = InfojobsJob(href,title,company,description)
-                    if(ifj.href!=None):
-                        joblist.append(ifj)
-                        print "t:"+ifj.title
-                        print "h:"+ifj.href
-                        print "c:"+ifj.company
-                        print "d:"+ifj.description
-                        print "appended::"+str(joblist.__len__())
+                    try:
+                        divs = job.find_elements_by_tag_name("div")
+                        href=None
+                        title=None
+                        company=None
+                        description=None
+                        for div in divs:
+                            classname = div.get_attribute("class")
+                            if classname == 'description':
+                                title = div.find_element_by_tag_name("h2").text
+                                href = div.find_element_by_tag_name("a").get_attribute("href")
+                                company = div.find_element_by_tag_name("h3").text
+                            elif classname == 'details':
+                                description=div.find_element_by_tag_name("p").text
+                        
+                        ifj = InfojobsJob(href,title,company,description)
+                        if(ifj.href!=None):
+                            joblist.append(ifj)
+                            print "t:"+ifj.title
+                            print "h:"+ifj.href
+                            print "c:"+ifj.company
+                            print "d:"+ifj.description
+                            print "appended::"+str(joblist.__len__())
+                    except Exception:
+                        #This no matter, sometimes infojobs portal make stranges redirections, maybe anti scraping, I don't know
+                        print "Something was wrong..."
+                        continue
         
         print "return part-jobs:"+str(joblist.__len__())
         return joblist
