@@ -2,7 +2,7 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
 from utils import remove_accents
 
 import time
@@ -25,21 +25,27 @@ class InfojobsSearch:
         
         if not self.browser:
             return joblist
-            
+        
+	print "Get infojobs"    
         self.browser.get("http://www.infojobs.net")
 
+	print "Sleep 2"
         time.sleep(2)
 
+	print "Provincia"
         self.browser.find_element_by_id("of_provincia-button").click()
         provincias = self.browser.find_element_by_css_selector(".ui-multiselect-checkboxes.ui-helper-reset")
 
+	print "Find provincias"
         if provincias:
             pros = provincias.find_elements_by_tag_name("li")
             for pro in pros:
                 textPro = remove_accents(pro.text)
                 if textPro in self.provlist:
-                    pro.click()
+		    print "Hago click:"+textPro
+                    pro.find_element_by_tag_name("input").click()
 
+	print "Palabra"
         palabra = self.browser.find_element_by_id("palabra")
         if palabra and palabra.is_displayed():
             palabra.click()
@@ -47,6 +53,7 @@ class InfojobsSearch:
             time.sleep(2)
             palabra.send_keys('\n')
         
+	print "Sleep 4"
         time.sleep(4)
         joblist = self.getData()
         time.sleep(2)
@@ -92,12 +99,13 @@ class InfojobsSearch:
         return joblist
         
     def getData(self):
+	print "Get data"
         joblist = []
         try:
             lis = self.browser.find_element_by_id("main-content")
         except NoSuchElementException:
             return joblist
-
+	print "List"
         if lis:
             try:
                 lu = lis.find_element_by_tag_name("ul")
@@ -105,7 +113,9 @@ class InfojobsSearch:
             except NoSuchElementException:
                 return joblist
         
+	    print "Jobs!"
             if jobs and jobs.__len__()>0:
+		print "Job...."
                 for job in jobs:
                     try:
                         divs = job.find_elements_by_tag_name("div")
@@ -147,10 +157,18 @@ class InfoJobsLogin:
     def login(self):
         self.browser.get("http://www.infojobs.net")
         time.sleep(1)
-        self.browser.find_element_by_id("login-access").click()
+        print "Click:"
+        #self.browser.find_element_by_id("login-access").click()
+        self.browser.execute_script("javascript:slideLogin();")
         time.sleep(3)
-        self.browser.find_element_by_id("email").send_keys(self.user)
-        self.browser.find_element_by_id("e-password").send_keys(self.passwd)
+        try:
+        	self.browser.find_element_by_id("email").send_keys(self.user)
+        	self.browser.find_element_by_id("e-password").send_keys(self.passwd)
+        except ElementNotVisibleException:
+                print "Exception:"
+                self.browser.find_element_by_id("login-access").click()
+                self.browser.find_element_by_id("email").send_keys(self.user)
+                self.browser.find_element_by_id("e-password").send_keys(self.passwd)
         
         self.browser.find_element_by_id("idSubmitButton").click()
         
@@ -171,22 +189,26 @@ class InfoJobsJoin:
         #self.browser.find_element_by_id("e-password").send_keys(self.passwd)
         #self.browser.find_element_by_id("idSubmitButton").click()
         
-        time.sleep(4)
         self.browser.get(self.url)
-        time.sleep(4)
+        time.sleep(12)
         try:
             candidate = self.browser.find_element_by_id("candidate_application")
         except NoSuchElementException:
+            print "Error no Such element: candidate_application"
             return 1
         
         if candidate:
+            print "Cancidate click"
             candidate.click()
         else:
+            print "No Cancidate"
             return 1
         time.sleep(2)
         try:
+            print "Inscribete click"
             self.browser.find_element_by_id("linkInscribete4").click() 
         except Exception:
+            print "No Inscribete"
             return 2
               
         

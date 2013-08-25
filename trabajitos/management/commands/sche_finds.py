@@ -30,7 +30,9 @@ class Command(NoArgsCommand):
             firefoxProfile = FirefoxProfile()
             firefoxProfile.set_preference("general.useragent.override", useragent)
             firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false')
-            firefoxProfile.set_preference('permissions.default.image', 2)
+            #May be this line cause problems in some plataforms(like ARM) whit elements visibles
+            #and not visibles becasue if you don't load de images del element is not visible
+            #firefoxProfile.set_preference('permissions.default.image', 2)
             browser = webdriver.Firefox(firefoxProfile)
             browser.delete_all_cookies()
             

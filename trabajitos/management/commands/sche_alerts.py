@@ -40,8 +40,9 @@ class Command(NoArgsCommand):
                 print i.href
                 jobs=JobAlert.objects.filter(Q(user=alert.user) & Q(url=i.href))
                 if jobs.__len__() == 0:
-                    jobalerts.append(job)
-                
+                    jobalerts.append(i)
+            
+	    print "Send alerts!"
             if jobalerts.__len__() > 0:
                 body = ''
                 for i in joblist:
