@@ -4,6 +4,7 @@
 <script type="text/javascript">
 	var allMsg='{% trans "all" %}';
 	var goodMsg='{% trans "good" %}';
+    var comerror='{% trans "comunication-error" %}';
 </script>
 <script type="text/template" id="alerts_template">
     <% _.each(alerts, function(alert) { %>
@@ -61,7 +62,7 @@
         </div>
     <% }); %>
 </script>
-<nav id=statistics>total:{{total}} - last-30days:{{partial}}</nav>
+<nav id=statistics>{% trans "total" %}:{{total}} - {% trans "last-30days" %}:{{partial}}</nav>
 <div id=home>
     <div id=account>{% trans "ijaccount" %}</div>
     <div id=aaccount>

@@ -62,3 +62,12 @@ msgstr "Desconectar"
 
 msgid "all"
 msgstr "Todas"
+
+msgid "comunication-error"
+msgstr "Error de comunicación, grrr ¡Trata de intentarlo otra vez!"
+
+msgid "total"
+msgstr "Total"
+
+msgid "last-30days"
+msgstr "Ultimos 30 días"

@@ -1,5 +1,6 @@
 var actionScroll = false;
 var scrollCount = 0;
+var action = 'f';
 
 var all=true;
 
@@ -198,7 +199,11 @@ $(document).ready(function() {
     $(window).scroll(function() {
         if  ($(window).scrollTop()+200 >= ($(document).height() - ($(window).height()))){
             if (actionScroll == false) {
-                var findList = new FindList();
+                if(action=='f'){
+                    var findList = new FindList();
+                }else{
+                    var jAlertList = new JAlertList();
+                }
             }
         }
     });
@@ -209,20 +214,21 @@ $(document).ready(function() {
             $("#all").html(allMsg);
             scrollCount = 0;
             $("#data").html("");
-            loadFinds();
         }else{
             all=true;
             $("#all").html(goodMsg);
             scrollCount = 0;
             $("#data").html("");
-            loadFinds();
         }
+        loadFinds();
+        action = 'f';
     });
     
 
     $("#jobalerts").click(function() {
     	$("#data").html("");
         scrollCount = 0;
+        action = 'a';
     	loadJAlerts();
     });
     
@@ -235,13 +241,13 @@ function adelete(id){
 	dataType: "json",
 	success: function(data){
 	    if(data.state==false){
-		alert("comunication-error");
+		alert(comerror);
 	    }else{
 		$("#search"+id).remove();
 	    }
 	},
 	error: function(e, xhr){
-	    alert("comunication-error")   
+	    alert(comerror);
 	}
     });
 }
@@ -252,13 +258,13 @@ function alertdelete(id){
 	dataType: "json",
 	success: function(data){
 	    if(data.state==false){
-		alert("comunication-error");
+		alert(comerror);
 	    }else{
 		$("#alert"+id).remove();
 	    }
 	},
 	error: function(e, xhr){
-	    alert("comunication-error")   
+	    alert(comerror);
 	}
     });
 }

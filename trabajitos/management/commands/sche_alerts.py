@@ -16,6 +16,10 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 
 from trabajitos.apps.infojobs.infojobs import InfojobsSearch, InfoJobsJoin, InfojobsJob
 
+import logging
+
+logger = logging.getLogger('schedule')
+
 class Command(NoArgsCommand):
     help = 'Trow all alerts jobs portal/s '
     
@@ -23,13 +27,16 @@ class Command(NoArgsCommand):
         alerts = Alert.objects.all()
         
         for alert in alerts:
-            print alert.words+"::"+alert.provinces
+            logger.debug(alert.words+"::"+alert.provinces)
             
             useragent = sample(settings.USER_AGENTS,1)[0]
-            print useragent
+            logger.debug(useragent)
             
             firefoxProfile = FirefoxProfile()
             firefoxProfile.set_preference("general.useragent.override", useragent)
+            firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false')
+            firefoxProfile.set_preference('permissions.default.image', 2)
+
             browser = webdriver.Firefox(firefoxProfile)
             
             infojobs = InfojobsSearch(alert.words,alert.provinces.lower().split(','),browser)
@@ -37,18 +44,21 @@ class Command(NoArgsCommand):
             
             jobalerts=[]
             for i in joblist:
-                print i.href
+                logger.debug(i.href)
                 jobs=JobAlert.objects.filter(Q(user=alert.user) & Q(url=i.href))
                 if jobs.__len__() == 0:
                     jobalerts.append(i)
             
-	    print "Send alerts!"
+	    logger.debug("Send alerts!")
             if jobalerts.__len__() > 0:
                 body = ''
                 for i in joblist:
                     jobalert = JobAlert(alert=alert,user=alert.user,url=i.href,siteid=i.href,title=i.title,company=i.company,description=i.description)
-                    jobalert.save()
-                    body = body + i.title+" - "+i.company+"<br/>"+i.description+"<br/>"+i.href
+                    try:
+                        jobalert.save()
+                        body = body + i.title+" - "+i.company+"<br/>"+i.description+"<br/>"+i.href
+                    except Exception:
+                        logger.debug("Is present!"+i.href)
                 #user = User.objects.get(id=alert.user)
                     
                 if alert.user:
@@ -71,7 +81,7 @@ class Command(NoArgsCommand):
                     session.ehlo
                     session.login('respira@gmail.com', 'oqdqw859w')
                 
-                    print "sendmail"
+                    logger.debug("sendmail")
                     session.sendmail(sender.encode("utf-8"), recipient.encode("utf-8"), headers.encode("utf-8") + "\r\n\r\n" + body.encode("utf-8"))
                     session.quit()
             

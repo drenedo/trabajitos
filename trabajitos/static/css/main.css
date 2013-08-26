@@ -267,10 +267,13 @@ form#login label {
 	border-bottom : 3px solid #c7d7e0;
 	/*list-style: square url("/static/images/jobHeader.png");*/
 }
-#data ul{
+#data ul, #data .job{
     background-image:url('/static/images/blueshadow.png');
     background-repeat:repeat-y;
     margin: 0;
+}
+#data .job{
+    border-bottom : 3px solid #c7d7e0;
 }
 #statistics{
     padding: 0 0 0 1%;

@@ -61,3 +61,12 @@ msgstr "Logout"
 
 msgid "all"
 msgstr "All"
+
+msgid "comunication-error"
+msgstr "Comunication error, grrr... please try again!"
+
+msgid "total"
+msgstr "Total"
+
+msgid "last-30days"
+msgstr "Last 30 days"

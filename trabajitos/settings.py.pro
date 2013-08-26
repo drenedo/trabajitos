@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 
 PROJECT_ROOT = os.path.dirname( os.path.abspath(__file__) )
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -28,7 +27,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -151,14 +150,6 @@ LOCALE_PATHS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
@@ -169,13 +160,7 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        },
-        'log_to_stdout': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'stream': sys.stdout,
-            'formatter': 'verbose',
-        },
+        }
     },
     'loggers': {
         'django.request': {
@@ -183,13 +168,10 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'schedule': {
-            'handlers': ['log_to_stdout'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
     }
 }
+
+FORCE_SCRIPT_NAME = ''
 
 USER_AGENTS = {
     "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us)",

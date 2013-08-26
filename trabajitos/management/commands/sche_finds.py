@@ -12,32 +12,35 @@ from random import sample
 from trabajitos.apps.user.models import Search, Find, Job, Account
 from trabajitos.apps.infojobs.infojobs import InfojobsSearch, InfoJobsJoin, InfoJobsLogin, InfojobsJob
 
+import logging
+
+logger = logging.getLogger('schedule')
+
 class Command(NoArgsCommand):
     help = 'Trow all queries to join job\'s portal/s '
     
     def handle(self, *args, **options):
-        searchs = Search.objects.all()
+        #searchs = Search.objects.all().filter(Q(user=2))
+	searchs = Search.objects.all()
 
         for search in searchs:
             
-            print search.words+"::"+search.provinces
+            logger.debug(search.words+"::"+search.provinces)
             find = Find(search=search,total=0,efective=0)
             find.save()
             
             useragent = sample(settings.USER_AGENTS,1)[0]
-            print useragent
+            logger.debug(useragent)
             
             firefoxProfile = FirefoxProfile()
             firefoxProfile.set_preference("general.useragent.override", useragent)
             firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false')
-            #May be this line cause problems in some plataforms(like ARM) whit elements visibles
-            #and not visibles becasue if you don't load de images del element is not visible
-            #firefoxProfile.set_preference('permissions.default.image', 2)
+            firefoxProfile.set_preference('permissions.default.image', 2)
             browser = webdriver.Firefox(firefoxProfile)
             browser.delete_all_cookies()
             
             
-            print "Searching..."
+            logger.debug("Searching...")
             infojobs = InfojobsSearch(search.words,search.provinces.lower().split(','),browser)
                 
             joblist = infojobs.find()
@@ -51,7 +54,7 @@ class Command(NoArgsCommand):
             afind = False
             pjoblist = []
             for i in joblist:
-                print i.href
+                logger.debug(i.href)
                 if not Job.objects.filter(Q(user=search.user) & Q(url=i.href)):
                     afind = True
                     pjoblist.append(i)
@@ -59,7 +62,7 @@ class Command(NoArgsCommand):
             find.total = joblist.__len__()
             find.efective = 0;
             
-            print pjoblist.__len__()
+            logger.debug(pjoblist.__len__())
             if afind:
                 account = Account.objects.filter(Q(user=search.user))[:1]
                 login=''
@@ -78,15 +81,15 @@ class Command(NoArgsCommand):
                     if search.non:
                         nexto = False
                         for non in search.non.split(','):
-                            print "test::"+non
+                            logger.debug("test::"+non)
                             if non in i.href or non in i.title or i.company:
                                 nexto = True
                         if nexto:
                             continue
-                    print i.href
+                    logger.debug(i.href)
                     previous = Job.objects.filter(Q(user=search.user) & Q(url=i.href))
                 
-                    print previous
+                    logger.debug(previous)
                     if not previous or previous.__len__() <=0 :
                         infocommit = InfoJobsJoin(i.href,browser) 
                         state = infocommit.commit()

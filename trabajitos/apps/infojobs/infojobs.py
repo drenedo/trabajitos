@@ -6,6 +6,9 @@ from selenium.common.exceptions import NoSuchElementException, ElementNotVisible
 from utils import remove_accents
 
 import time
+import logging
+
+logger = logging.getLogger('schedule')
 
 class InfojobsJob:
     def __init__(self, href=None, title=None, company=None, description=None):
@@ -26,26 +29,26 @@ class InfojobsSearch:
         if not self.browser:
             return joblist
         
-	print "Get infojobs"    
+	    logger.debug("Get infojobs")
         self.browser.get("http://www.infojobs.net")
 
-	print "Sleep 2"
+        logger.debug("Sleep 2")
         time.sleep(2)
 
-	print "Provincia"
+        logger.debug("Provincia")
         self.browser.find_element_by_id("of_provincia-button").click()
         provincias = self.browser.find_element_by_css_selector(".ui-multiselect-checkboxes.ui-helper-reset")
 
-	print "Find provincias"
+        logger.debug("Find provincias")
         if provincias:
             pros = provincias.find_elements_by_tag_name("li")
             for pro in pros:
                 textPro = remove_accents(pro.text)
                 if textPro in self.provlist:
-		    print "Hago click:"+textPro
+		    logger.debug("Hago click:"+textPro)
                     pro.find_element_by_tag_name("input").click()
 
-	print "Palabra"
+        logger.debug("Palabra")
         palabra = self.browser.find_element_by_id("palabra")
         if palabra and palabra.is_displayed():
             palabra.click()
@@ -53,8 +56,9 @@ class InfojobsSearch:
             time.sleep(2)
             palabra.send_keys('\n')
         
-	print "Sleep 4"
+        logger.debug("Sleep 4")
         time.sleep(4)
+        logger.debug("URL:"+self.browser.current_url)
         joblist = self.getData()
         time.sleep(2)
     
@@ -89,23 +93,25 @@ class InfojobsSearch:
                                     joblist.extend(self.getData())
                                     break
                         except Exception:
-                            print "Something was wrong..."
+                            logger.debug("Something was wrong...")
                             pass
                         
                 if not find:
                     end = True
-        
-        print "return jobs:"+str(joblist.__len__())
+       
+        logger.debug("URL:"+self.browser.current_url)
+        logger.debug("return jobs:"+str(joblist.__len__()))
         return joblist
         
     def getData(self):
-	print "Get data"
+        logger.debug("Get data")
         joblist = []
         try:
             lis = self.browser.find_element_by_id("main-content")
         except NoSuchElementException:
             return joblist
-	print "List"
+
+        logger.debug("List")
         if lis:
             try:
                 lu = lis.find_element_by_tag_name("ul")
@@ -113,9 +119,9 @@ class InfojobsSearch:
             except NoSuchElementException:
                 return joblist
         
-	    print "Jobs!"
+            logger.debug("Jobs!")
             if jobs and jobs.__len__()>0:
-		print "Job...."
+                logger.debug("Job....")
                 for job in jobs:
                     try:
                         divs = job.find_elements_by_tag_name("div")
@@ -135,14 +141,14 @@ class InfojobsSearch:
                         ifj = InfojobsJob(href,title,company,description)
                         if(ifj.href!=None):
                             joblist.append(ifj)
-                            print "t:"+ifj.title
-                            print "h:"+ifj.href
-                            print "c:"+ifj.company
-                            print "d:"+ifj.description
-                            print "appended::"+str(joblist.__len__())
+                            logger.debug("t:"+ifj.title)
+                            logger.debug( "h:"+ifj.href)
+                            logger.debug( "c:"+ifj.company)
+                            logger.debug( "d:"+ifj.description)
+                            logger.debug( "appended::"+str(joblist.__len__()))
                     except Exception:
                         #This no matter, sometimes infojobs portal make stranges redirections, maybe anti scraping, I don't know
-                        print "Something was wrong..."
+                        logger.debug("Something was wrong...")
                         continue
         
         print "return part-jobs:"+str(joblist.__len__())
@@ -157,7 +163,7 @@ class InfoJobsLogin:
     def login(self):
         self.browser.get("http://www.infojobs.net")
         time.sleep(1)
-        print "Click:"
+        logger.debug("Click:")
         #self.browser.find_element_by_id("login-access").click()
         self.browser.execute_script("javascript:slideLogin();")
         time.sleep(3)
@@ -165,13 +171,16 @@ class InfoJobsLogin:
         	self.browser.find_element_by_id("email").send_keys(self.user)
         	self.browser.find_element_by_id("e-password").send_keys(self.passwd)
         except ElementNotVisibleException:
-                print "Exception:"
+                logger.debug("Exception:")
                 self.browser.find_element_by_id("login-access").click()
                 self.browser.find_element_by_id("email").send_keys(self.user)
                 self.browser.find_element_by_id("e-password").send_keys(self.passwd)
         
         self.browser.find_element_by_id("idSubmitButton").click()
-        
+       
+	print "Logued"
+	time.sleep(10)
+	 
         return self.browser
     
     
@@ -182,59 +191,67 @@ class InfoJobsJoin:
     
     def commit(self):
         
-        #self.browser.get("http://www.infojobs.net")
-        #self.browser.find_element_by_id("login-access").click()
-        #time.sleep(1)
-        #self.browser.find_element_by_id("email").send_keys(self.user)
-        #self.browser.find_element_by_id("e-password").send_keys(self.passwd)
-        #self.browser.find_element_by_id("idSubmitButton").click()
-        
         self.browser.get(self.url)
-        time.sleep(12)
+        time.sleep(14)
         try:
             candidate = self.browser.find_element_by_id("candidate_application")
         except NoSuchElementException:
-            print "Error no Such element: candidate_application"
+
+	    time.sleep(6)
+        logger.debug("Wait more")
+
+        try:
+            candidate = self.browser.find_element_by_id("candidate_application")
+        except NoSuchElementException:
+		#print "---------------------------------"
+		#print self.browser.page_source
+		#print "---------------------------------"
+            logger.debug("Error no Such element: candidate_application at "+self.browser.current_url)
             return 1
         
         if candidate:
-            print "Cancidate click"
+            logger.debug("Cancidate click")
             candidate.click()
         else:
-            print "No Cancidate"
+            logger.debug("No Cancidate")
             return 1
-        time.sleep(2)
+        time.sleep(12)
         try:
-            print "Inscribete click"
+            logger.debug("Inscribete click")
             self.browser.find_element_by_id("linkInscribete4").click() 
         except Exception:
-            print "No Inscribete"
+            logger.debug("No Inscribete")
             return 2
               
         
-        time.sleep(4)
+        time.sleep(12)
         #fill the custom form
         myForm = self.browser.find_element_by_id("myForm")
         if myForm:
             myFormsOl = myForm.find_elements_by_tag_name("ol")
             if myFormsOl:
                 for myFormOl in myFormsOl:
+                    logger.debug("url:"+self.browser.current_url)
+                    logger.debug("Find inputs")
                     inputs = myFormOl.find_elements_by_tag_name("input")
                     textareas = myFormOl.find_elements_by_tag_name("textarea")
                     if inputs:
+                        logger.debug("Imputs find")
                         for inpu in inputs:
                             if inpu.is_displayed():
                                 if inpu.get_attribute("id")=="opcionCarta_nocarta":
                                     inpu.click()
                                 elif inpu.get_attribute("type")=="radio" and inpu.get_attribute("id")!="opcionCarta_incluir":
                                     inpu.click()
-                                print inpu.get_attribute("outerHTML")
+                                logger.debug("Selected:"+str(inpu.is_selected()))
                     if textareas:
                         for ttarea in textareas:
                             if ttarea.is_displayed():
+                                logger.debug("Find textareas")
                                 ttarea.send_keys("Error de codificaci&oacute;n con los datos del usuario, ha sido imposible recoger el formulario. Error code 0924521")
         
         #inscribe
+        logger.debug("Final click")
         self.browser.find_element_by_id("botonEnviar").click()
         return 0
 
