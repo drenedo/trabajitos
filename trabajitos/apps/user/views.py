@@ -29,7 +29,7 @@ def index(request):
     return HttpResponse(template.render(context))
 
 def errorlogin(request,msg):
-    return render_to_response('home.html', {'errors': msg})
+    return render(request,'index.html',{'errors': msg})
 
 
 def loginu(request):

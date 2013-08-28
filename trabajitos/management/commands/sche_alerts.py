@@ -79,7 +79,7 @@ class Command(NoArgsCommand):
                     session.ehlo()
                     session.starttls()
                     session.ehlo
-                    session.login('respira@gmail.com', 'oqdqw859w')
+                    session.login('mail@gmail.com', 'pass')
                 
                     logger.debug("sendmail")
                     session.sendmail(sender.encode("utf-8"), recipient.encode("utf-8"), headers.encode("utf-8") + "\r\n\r\n" + body.encode("utf-8"))
