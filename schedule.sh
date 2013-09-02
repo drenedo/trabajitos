@@ -1,6 +1,6 @@
 #!/bin/bash
 rm /tmp/.X99-lock
-killall Xvfb 
+killall Xvfb
 Xvfb :99 -screen 0 800x600x16 &
 export DISPLAY=:99
 
