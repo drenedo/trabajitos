@@ -17,6 +17,13 @@ class InfojobsJob:
         self.company=company
         self.description=description
 
+class InfojobsUpdate:
+    def __init__(self, browser=None):
+        self.browser = browser
+
+    def update(self):
+        self.browser.execute_script("javascript:actualizarFechaCVThickBox();")
+
 class InfojobsSearch:
     def __init__(self, key=None, provlist=None, browser=None):
         self.key = key
@@ -151,7 +158,7 @@ class InfojobsSearch:
                         logger.debug("Something was wrong...")
                         continue
         
-        print "return part-jobs:"+str(joblist.__len__())
+        logger.debug( "return part-jobs:"+str(joblist.__len__()))
         return joblist
     
 class InfoJobsLogin:
@@ -178,7 +185,7 @@ class InfoJobsLogin:
         
         self.browser.find_element_by_id("idSubmitButton").click()
        
-	print "Logued"
+	logger.debug("Logued")
 	time.sleep(10)
 	 
         return self.browser
