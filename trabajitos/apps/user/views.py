@@ -62,20 +62,21 @@ def home(request):
     if account and account.__len__()>0:
         login = account[0].login
         password = account[0].password
+	update = account[0].update
     else:
         login = ''
         password = ''
+	update = False
         
     startdate = date.today()
     enddate = startdate + timedelta(-30)
     
-    print str(startdate) + "---" + str(enddate)
     
     finds = Find.objects.all().filter(Q(date__range=[enddate,startdate]))
-    print str(finds.__len__())
     partial = Job.objects.filter(find_id__in=finds).filter(Q(user=request.user)).count()
     total = Job.objects.filter(Q(user=request.user)).count()
-    return render(request,'home.html',{'login':login,'password':password,'total':total,'partial':partial})
+    print "update"+str(update)
+    return render(request,'home.html',{'login':login,'password':password,'update':update,'total':total,'partial':partial})
 
 @login_required
 def addfind(request):
@@ -195,12 +196,14 @@ def myjobs(request, id=None):
 def changeaccount(request):
     login = request.POST['login']
     password = request.POST['password']
+    update = request.POST.get('update', False)
     account = Account.objects.filter(Q(user=request.user))[:1]
     if account and account.__len__()>0:
         account[0].login=login
         account[0].password=password
+	account[0].update=update
         account[0].save()
     else:
-        account = Account(login=login,password=password,user=request.user)
+        account = Account(login=login,password=password,update=update,user=request.user)
         account.save()
     return home(request)

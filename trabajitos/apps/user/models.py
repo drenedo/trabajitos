@@ -31,6 +31,7 @@ class Job(models.Model):
 class Account(models.Model):
     login = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+    update = models.BooleanField(default=0)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, related_name="model", null=True, blank=True)
     
 class Alert(models.Model):

@@ -71,12 +71,18 @@
             <fieldset class=mark>
                 <ul>
 			<li>
-				<label for=name>{% trans "login" %}</label>
-				<input id=login name=login type=text placeholder="{% trans "login" %}" value="{{login}}" required autofocus>
+                                <div>
+                                <label for=update>{% trans "update" %}</label>
+                                <input id=update name=update type=checkbox placeholder="{% trans "update" %}" {% if update %}checked=checked{% endif %} />
+                                </div>
+                        </li>
+			<li>
+				<label for=login>{% trans "login" %}</label>
+				<input id=login name=login type=text placeholder="{% trans "login" %}" value="{{login}}" required autofocus />
 			</li>
 			<li>
-				<label for=name>{% trans "pass" %}</label>
-				<input id=password name=password type=text placeholder="{% trans "pass" %}" value="{{password}}" required autofocus>
+				<label for=password>{% trans "pass" %}</label>
+				<input id=password name=password type=text placeholder="{% trans "pass" %}" value="{{password}}" required autofocus />
 			</li>
                         <li id=ssaddfind>
 				<input id=modify name=modify type=submit value={% trans "modify" %}>
