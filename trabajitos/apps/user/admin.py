@@ -1,10 +1,10 @@
 from django.contrib import admin
-from models import Alert, Job, Find, Search, Account
+from models import Alert, Job, Find, Search, Account, JobAlert
 
 class AlertAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('words', 'provinces','user')
 
-class JobAdmin(admin.ModelAdmin):
+class JobAlertAdmin(admin.ModelAdmin):
     pass
 
 class JobAdmin(admin.ModelAdmin):
@@ -21,6 +21,7 @@ class AccountAdmin(admin.ModelAdmin):
 
 admin.site.register(Alert, AlertAdmin)
 admin.site.register(Job, JobAdmin)
+admin.site.register(JobAlert, JobAlertAdmin)
 admin.site.register(Find, FindAdmin)
 admin.site.register(Search, SearchAdmin)
 admin.site.register(Account, AccountAdmin)
