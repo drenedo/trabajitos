@@ -11,10 +11,10 @@ class JobAdmin(admin.ModelAdmin):
     pass
 
 class FindAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('search','date','time','total','efective')
 
 class SearchAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('words', 'provinces','user')
 
 class AccountAdmin(admin.ModelAdmin):
     pass

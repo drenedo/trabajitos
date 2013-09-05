@@ -7,6 +7,8 @@ class Search(models.Model):
     non = models.CharField(max_length=500)
     locations = models.CharField(max_length=500)
     user = models.ForeignKey(User)
+    def __unicode__(self):
+        return 'Search: '+self.provinces+' '+self.words
 
 class Find(models.Model):
     search = models.ForeignKey(Search)
@@ -14,7 +16,9 @@ class Find(models.Model):
     time = models.TimeField(auto_now=True, auto_now_add=True)
     total = models.IntegerField()
     efective = models.IntegerField()
-    
+    def __unicode__(self):
+        return 'Search: '+self.search+' '+str(self.date)+' '+str(self.time)+' '+str(self.total)+':'+str(self.efective)
+
 class Job(models.Model):
     find = models.ForeignKey(Find)
     status = models.IntegerField()
@@ -24,21 +28,21 @@ class Job(models.Model):
     company = models.TextField()
     description = models.TextField()
     user = models.ForeignKey(User)
-    
+
     class Meta:
         unique_together = (('url', 'user',),('siteid', 'user',))
-        
+
 class Account(models.Model):
     login = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     update = models.BooleanField(default=0)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, related_name="model", null=True, blank=True)
-    
+
 class Alert(models.Model):
     provinces = models.CharField(max_length=500)
     words = models.CharField(max_length=500)
     user = models.ForeignKey(User)
-    
+
 class JobAlert(models.Model):
     alert = models.ForeignKey(Alert)
     date = models.DateField(auto_now=True, auto_now_add=True)
@@ -49,6 +53,6 @@ class JobAlert(models.Model):
     company = models.TextField()
     description = models.TextField()
     user = models.ForeignKey(User)
-    
+
     class Meta:
         unique_together = (('url', 'user',),('siteid', 'user',))
