@@ -8,7 +8,7 @@ class JobAlertAdmin(admin.ModelAdmin):
     pass
 
 class JobAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('find','url','title','company')
 
 class FindAdmin(admin.ModelAdmin):
     list_display = ('search','date','time','total','efective')

@@ -17,7 +17,7 @@ class Find(models.Model):
     total = models.IntegerField()
     efective = models.IntegerField()
     def __unicode__(self):
-        return 'Search: '+self.search+' '+str(self.date)+' '+str(self.time)+' '+str(self.total)+':'+str(self.efective)
+        return str(self.search)+' '+str(self.date)+' '+str(self.time)+' '+str(self.total)+':'+str(self.efective)
 
 class Job(models.Model):
     find = models.ForeignKey(Find)
@@ -28,7 +28,7 @@ class Job(models.Model):
     company = models.TextField()
     description = models.TextField()
     user = models.ForeignKey(User)
-
+    
     class Meta:
         unique_together = (('url', 'user',),('siteid', 'user',))
 
