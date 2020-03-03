@@ -1,10 +1,11 @@
+:warning: **This project is unmaintained**: It Should be updated!
+
 trabajitos
 ==========
 
 Trabajitos is an easy way to automate your typical actions in the job search site who called infojobs.
 
 For the time being trabajitos is not stable.
-
 
 requirements
 ============
